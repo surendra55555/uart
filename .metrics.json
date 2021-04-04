@@ -1,0 +1,34 @@
+{
+	    "builds": {
+	        "list": [
+	                   {
+	                        "name": "uart",
+	                        "cmd": "dsim -linebuf -work $ROOT_DIR/dsim_work -top top_tb -genimage uart +incdir+$UVM_HOME/src $UVM_HOME/src/uvm.sv +incdir+$ROOT_DIR/ -F $ROOT_DIR/list.f ",
+	                        "wavesCmd": "dsim -linebuf +acc+rwb  -work $ROOT_DIR/dsim_work -top top_tb -genimage uart +incdir+$UVM_HOME/src $UVM_HOME/src/uvm.sv +incdir+$ROOT_DIR/ -F $ROOT_DIR/list.f"
+	                    }
+	            ]
+	    },
+	    "regressions": [
+	                     {
+	                         "name": "uart sanity tests",
+	                        "description": "Sanity tests for UART",
+	                       "tests": {
+	                                "resultsDir": "/mux-flow/results",
+	                                "builds": ["uart"],                
+	                                "list": [
+	                                    {"name": "uart_base_test",
+	                                         "iterations": 1,
+	                                         "build": "uart",
+	                                         "cmd": "cd <resultsDir>;dsim -linebuf -work $ROOT_DIR/dsim_work +UVM_TESTNAME=uart_base_test -image uart +acc+b  -sv_lib $UVM_HOME/src/dpi/libuvm_dpi.so  ",
+	                                         "wavesCmd": "cd <resultsDir>;dsim -linebuf -work $ROOT_DIR/dsim_work +UVM_TESTNAME=uart_base_test -image uart +acc+b  -sv_lib $UVM_HOME/src/dpi/libuvm_dpi.so -waves waves.vcd.gz",
+	                                         "logFile": "dsim.log",
+	                                         "wavesFile": "waves.vcd.gz",
+	                                         "metricsFile": "metrics.db",
+	                                         "seed": "random",
+	                                         "isPass": [""]
+	                                    }]
+	                                 }
+	                        }
+	                     ]
+	}
+
